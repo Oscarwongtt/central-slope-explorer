@@ -73,6 +73,49 @@ label{font-size:16px;line-height:1.35;margin:18px 0 7px}
 .reference-answer h3{font-size:20px;margin:0 0 9px}
 .reference-answer p{font-size:14px}
 .comparison th,.comparison td{font-size:13px;line-height:1.4}
+
+/* V6: graph-adjacent evidence picker, accessible at classroom display sizes */
+.profile-explore-layout{display:block;margin-top:10px}
+.profile-explore-layout.with-picker{display:grid;grid-template-columns:minmax(0,1fr) minmax(230px,260px);gap:14px;align-items:start}
+.profile-explore-layout .profile-area{min-width:0;min-height:212px;height:224px;border:1px solid #325764;border-radius:10px;background:#0e2735}
+.profile-explore-layout .profile-area svg{min-width:0;min-height:200px}
+.graph-section-picker{background:#1b3945;border:2px solid #66cbaa;border-radius:12px;padding:13px;min-width:0}
+.graph-section-picker .picker-heading{font-weight:900;letter-spacing:.02em;font-size:15px;color:#91ebc4;margin-bottom:7px}
+.graph-section-picker .picker-help{font-size:14px;line-height:1.55;color:#e3f4ed;margin:3px 0 9px}
+.graph-section-picker .picker-title{font-size:14px;font-weight:800;margin:12px 0 6px;color:#e8f5ee}
+.graph-section-picker .chips{display:flex;flex-wrap:wrap;gap:6px}
+.graph-section-picker .chip{flex:1 1 64px;font-size:14px;padding:9px 6px;min-width:0}
+.graph-section-picker .input{font-size:14px;padding:9px 8px}
+.graph-section-picker .section-buttons{grid-template-columns:repeat(3,minmax(0,1fr));max-height:200px;overflow:auto}
+.graph-section-picker .section-btn{font-size:14px;min-height:44px;padding:6px 5px}
+.graph-section-picker .picker-footnote{font-size:12px;line-height:1.45;color:#b8ced4;margin:5px 0 0}
+.graph-section-picker .button{font-size:14px;min-height:44px;padding:8px 10px}
+.graph-section-picker .selected-graph-section{border-radius:8px;border:1px solid #5a8092;background:#17323e;margin:11px 0 9px;padding:10px;font-size:14px;font-weight:750;line-height:1.5;color:#eff9fc}
+.graph-section-picker .nominations-list{border-radius:9px;border:1px solid #4b6b73;background:#102a36;margin:10px 0 0;padding:11px;color:#e0f6ef;font-size:13px;line-height:1.5}
+.graph-section-picker .nominations-list b{color:#90e4bc;font-size:14px}
+.graph-section-picker .nominations-list p{font-size:13px;line-height:1.5;margin:6px 0}
+#go-to-profile{margin:10px 0 14px;font-weight:850}
+.profile-flash{outline:3px solid #f0be75;outline-offset:4px}
+.mission-three-questions{display:grid;gap:12px}
+.tf-card{border:2px solid #497280;background:#193642;border-radius:12px;margin:0;padding:15px;min-width:0}
+.tf-card legend{color:#93e4c8;font-weight:850;font-size:19px;padding:0 8px}
+.tf-card p{font-size:15px;line-height:1.5;margin:8px 0 10px}
+.tf-choice-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tf-choice{display:flex;align-items:center;gap:10px;padding:12px;border:2px solid #507183;border-radius:10px;font-size:17px;cursor:pointer;color:white;background:#14303e;font-weight:800}
+.tf-choice:has(input:checked){border-color:#95e7bd;background:#235347}
+.tf-choice input{accent-color:#82dcab;width:20px;height:20px;flex:none}
+.tf-evidence{font-size:14px!important;color:#d1dfdf;line-height:1.5}
+.tf-result{border:1px solid #5c8f80;background:#193f40;padding:13px;border-radius:10px;margin:11px 0}
+.tf-result b{font-size:17px}
+.tf-result p{font-size:15px;line-height:1.6}
+.tf-result .explanation{color:#bfd6d4}
+.tf-result .button{font-size:14px}
+.reference-answer h3{font-size:20px}
+.reference-answer p{font-size:15px}
+@media(max-width:1520px){.profile-explore-layout.with-picker{grid-template-columns:minmax(0,1fr) 215px}.graph-section-picker{padding:10px}}
+@media(max-width:1300px){.profile-explore-layout.with-picker{grid-template-columns:minmax(0,1fr) 260px}}
+@media(max-width:920px){.profile-explore-layout.with-picker{display:block}.graph-section-picker{margin-top:13px}.graph-section-picker .section-buttons{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:520px){.tf-choice-row{grid-template-columns:1fr 1fr}.graph-section-picker .section-buttons{grid-template-columns:repeat(3,minmax(0,1fr))}}
 </style>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
 
@@ -80,8 +123,8 @@ label{font-size:16px;line-height:1.35;margin:18px 0 7px}
 </head><body>
 <header class="topbar"><a class="brand" href="#" title="Home">CENTRAL<span class="accent">/</span>SLOPE <small>EXPLORER • F3 MATHEMATICS</small></a><span class="head-sub">CENTRAL & MID-LEVELS · WALKING ROUTE INVESTIGATION</span><div class="head-actions"><button id="setup-open" class="button subtle">ⓘ Map information</button><button id="export" class="button secondary">↓ Export report</button></div></header>
 <div class="layout">
-<aside class="sidebar left"><div class="eyebrow">ONE CONNECTED INVESTIGATION · VERSION 4</div><h1>How steep<br>is your <em>route?</em></h1><p class="muted">Keep the same start A and destination B. Explore different paths between them, calculate slopes, and choose the best walking route.</p><div class="progress"><div class="progress-top"><b>FIELDWORK PROGRESS</b><b id="progress-num">0 / 3</b></div><div class="progress-track"><div id="progress-bar"></div></div></div>
-<nav class="missions"><button class="mission active" data-phase="explore"><span>01</span><div><b>Explore & predict</b><small>Pick two locations · Walking alternatives</small></div><i id="mark-explore">↗</i></button><button class="mission" data-phase="measure"><span>02</span><div><b>Measure sections</b><small>Rise, run, gradient, inclination</small></div><i id="mark-measure">↗</i></button><button class="mission" data-phase="decide"><span>03</span><div><b>Compare & decide</b><small>Choose the best walking route</small></div><i id="mark-decide">↗</i></button></nav>
+<aside class="sidebar left"><div class="eyebrow">ONE CONNECTED INVESTIGATION · VERSION 6</div><h1>How steep<br>is your <em>route?</em></h1><p class="muted">Keep the same start A and destination B. Explore different paths between them, calculate slopes, and choose the best walking route.</p><div class="progress"><div class="progress-top"><b>FIELDWORK PROGRESS</b><b id="progress-num">0 / 3</b></div><div class="progress-track"><div id="progress-bar"></div></div></div>
+<nav class="missions"><button class="mission active" data-phase="explore"><span>01</span><div><b>Explore & predict</b><small>Pick two locations · Walking alternatives</small></div><i id="mark-explore">↗</i></button><button class="mission" data-phase="measure"><span>02</span><div><b>Measure sections</b><small>Rise, run, gradient, inclination</small></div><i id="mark-measure">↗</i></button><button class="mission" data-phase="decide"><span>03</span><div><b>Compare & decide</b><small>Is the steepest |gradient| above 0.15?</small></div><i id="mark-decide">↗</i></button></nav>
 <h3 class="side-title">INVESTIGATION NOTEBOOK</h3><div id="notebook" class="notes"><p class="muted">Your saved route predictions and calculations appear here.</p></div><div class="sidebar-foot">Study region<br><b>Central · Mid-Levels, Hong Kong</b></div></aside>
 <main class="main-content"><div class="map-heading"><div><span class="eyebrow">REAL GEOGRAPHY · OPENSTREETMAP PEDESTRIAN NETWORK</span><h2>Explore the hills.</h2></div><div class="map-top-actions"><button class="button subtle" id="reset-points">Start new journey</button><button class="button subtle" id="map-center">⌖ Reset view</button></div></div>
 <div id="journey-banner" class="journey-banner" role="status" aria-live="polite">
@@ -92,7 +135,21 @@ label{font-size:16px;line-height:1.35;margin:18px 0 7px}
 <div class="map-toolbar"><button id="tab-routes" class="tab active">Walking routes</button><button id="tab-contours" class="tab">Contour reference</button><span id="service-status" class="map-status">Key-free pedestrian routing</span></div>
 <div class="map-wrapper"><div id="google-map" aria-label="OpenStreetMap walking routes — click to select endpoints"></div><div id="context-map" style="display:none"></div><div id="map-loading" class="map-loading hidden"><div class="load-icon">⌁</div><b>Map tiles unavailable</b><p>Try another network, or open the external OpenStreetMap map. Public services may be temporarily unavailable.</p><a href="https://www.openstreetmap.org/#map=15/22.2788/114.1573" target="_blank" rel="noopener" class="button primary">Open external map ↗</a></div><div class="map-instructions" id="map-instructions">STEP 1: Click to place <b>A</b> then <b>B</b>. Afterwards, add alternative routes using <b>via points</b> without changing A or B.</div></div>
 <div class="source-note"><span>Pedestrian routes: OpenStreetMap via shared routing demos · © OpenStreetMap contributors</span><span>Elevation = terrain estimates, not surveyed road surfaces</span></div>
-<section class="profile-card"><div class="profile-top"><div><span class="eyebrow">INTERACTIVE ELEVATION PROFILE</span><h3 id="profile-title">Select a walking route</h3></div><span class="pill" id="profile-pill">NO ROUTE YET</span></div><div id="profile-area" class="profile-area"><div class="profile-empty">When the routing service returns a walking route, its terrain profile and mathematical sections will appear here.</div></div><div id="route-metrics" class="metric-grid"><div><small>Walking-route length</small><b>—</b></div><div><small>Horizontal route run</small><b>—</b></div><div><small>Overall gradient</small><b>—</b></div><div><small>Max uphill section</small><b>—</b></div></div><p class="tiny muted">Profiles are based on sampled 90 m terrain-model elevation. Overpasses, stairs, and the 90 m terrain-model resolution and short intervals can make calculated gradients inaccurate.</p></section>
+<section class="profile-card"><div class="profile-top"><div><span class="eyebrow">INTERACTIVE ELEVATION PROFILE</span><h3 id="profile-title">Select a walking route</h3></div><span class="pill" id="profile-pill">NO ROUTE YET</span></div><div id="profile-explore-layout" class="profile-explore-layout">
+<div id="profile-area" class="profile-area"><div class="profile-empty">When the routing service returns a walking route, its terrain profile and mathematical sections will appear here.</div></div>
+<aside id="graph-section-picker" class="graph-section-picker hidden" aria-label="Select three candidate steep sections beside the elevation graph">
+<div class="picker-heading">MISSION 2 · CHOOSE FROM THE GRAPH</div>
+<p class="picker-help"><strong>1.</strong> Choose a route. <strong>2.</strong> Compare the shaded graph intervals. <strong>3.</strong> Select an S-number and click <strong>Nominate</strong>. Pick at least THREE in total, including one on every route.</p>
+<div id="measure-route-buttons" class="chips" aria-label="Select a route to inspect"></div>
+<div class="picker-title">Choose a consistent section length</div>
+<select id="section-width" class="input"><option value="50">50 m — unreliable with coarse terrain estimates</option><option value="100">100 m — approximate</option><option value="200" selected>200 m — recommended (still approximate)</option></select>
+<p class="picker-footnote">Changing section length resets chosen sections and calculations.</p>
+<div class="picker-title">Choose a section beside the diagram</div>
+<div id="section-buttons" class="section-buttons" aria-label="Click a section to inspect its location on the graph"><p class="muted">Generate walking routes in Mission 1 first.</p></div>
+<div id="selected-graph-section" class="selected-graph-section" aria-live="polite">Select a route and graph interval.</div>
+<button id="nominate-section" class="button secondary wide" type="button">☆ Nominate selected section</button>
+<div id="nominations-list" class="nominations-list" aria-live="polite">No nominated sections yet.</div>
+</aside></div><div id="route-metrics" class="metric-grid"><div><small>Walking-route length</small><b>—</b></div><div><small>Horizontal route run</small><b>—</b></div><div><small>Overall gradient</small><b>—</b></div><div><small>Max uphill section</small><b>—</b></div></div><p class="tiny muted">Profiles are based on sampled 90 m terrain-model elevation. Overpasses, stairs, and the 90 m terrain-model resolution and short intervals can make calculated gradients inaccurate.</p></section>
 </main>
 <aside class="sidebar right"><div class="phase-header"><span class="eyebrow" id="mission-heading">MISSION 01 / DISCOVER</span><span class="pill">50 MIN ACTIVITY</span></div>
 <section id="panel-explore" class="mission-panel"><h2>Find <em>walkable</em> routes.</h2><p class="muted">Keep A and B the same for every route. Search for the first walking route, then choose a different street to create another route through a via point.</p><div class="callout"><b>THE CHALLENGE</b><p>Compare at least TWO different routes between the SAME starting point A and destination B. You must collect evidence before deciding.</p></div><div class="fields"><div><label for="start-place">Start point A</label><input id="start-place" class="input" placeholder="Click map or enter lat, lng"></div><div><label for="end-place">Destination B</label><input id="end-place" class="input" placeholder="Click map or enter lat, lng"></div></div><div class="row"><button id="suggest-points" class="button subtle">Use sample locations</button><button id="get-routes" class="button primary grow">Find first route →</button></div><p class="hint">Tip: Use sample locations for a first test. Once Route A is saved, A and B stay fixed. Choose a via point on another street for Route B.</p><div id="route-status" class="status">Choose A and B, then find Route A. Routes stay saved until you deliberately start a new journey.</div>
@@ -107,18 +164,12 @@ label{font-size:16px;line-height:1.35;margin:18px 0 7px}
   <div id="via-status" class="status">Your new route will be kept alongside the previous ones. Up to 3 routes per journey.</div>
 </div><div class="section-title">SAVED WALKING ROUTES — SAME A & B</div><p class="hint">To remove an unwanted route, click Delete next to it. Your other routes, endpoints, and measured sections remain saved.</p><div id="route-options" class="route-options"><p class="muted">Your saved walking routes will appear here. Start with Route A, then add an alternative via a different street.</p></div><label for="prediction">Which SAVED route do you predict has the gentlest steep sections?</label><select id="prediction" class="input"><option value="">Select a route after searching</option></select><label for="predict-reason">Justify your prediction with map/terrain evidence</label><textarea id="predict-reason" class="input" rows="3" placeholder="I predict route ... because..."></textarea><button id="save-prediction" class="button secondary wide">Save Mission 1 prediction</button><div id="prediction-feedback" class="feedback" aria-live="polite"></div></section>
 <section id="panel-measure" class="mission-panel hidden">
-<h2>Investigate the <em>steepest sections.</em></h2>
-<p class="muted">Look at the elevation profiles of the saved walking routes. First <strong>nominate at least THREE different sections</strong> you expect to be steepest. Include at least one section from EACH route. Then calculate all three to test your predictions.</p>
+<h2>Investigate <em>three steep sections.</em></h2>
+<p class="muted">Use the <strong>section chooser immediately beside the elevation graph</strong>. First nominate THREE or more sections you think are the steepest, including at least one from EACH saved route. Then calculate each chosen section below.</p>
+<button id="go-to-profile" class="button subtle wide" type="button">↑ Go to graph &amp; section chooser</button>
 <div class="mode-note"><b>Your mathematical tools:</b> signed gradient = vertical change ÷ horizontal run (a decimal, NOT a percentage); steepness ratio = 1:n where n = horizontal run ÷ |vertical change|; angle = arctan(gradient). A negative gradient indicates descent. For a level section, write <b>level</b> instead of 1:n.</div>
-<label for="section-width">Target section length (keep the SAME length for every route)</label>
-<select id="section-width" class="input"><option value="50">50 m — unreliable with coarse terrain estimates</option><option value="100">100 m — approximate</option><option value="200" selected>200 m — recommended; still approximate</option></select>
-<p class="hint">Changing section length resets your nominated sections and calculations, because the sections are different.</p>
-<div class="section-title">STEP 1 · NOMINATE THREE STEEP SECTIONS</div>
-<div id="measure-route-buttons" class="chips"></div>
-<div id="section-buttons" class="section-buttons"><p class="muted">Generate walking routes in Mission 1 first.</p></div>
-<button id="nominate-section" class="button secondary wide" type="button">☆ Nominate this section as one of the steepest</button>
-<div id="nominations-list" class="status">0 sections nominated. Choose at least 3 across your saved routes, including each route.</div>
-<div class="section-title">STEP 2 · CALCULATE YOUR NOMINATED SECTION</div>
+<div class="section-title">STEP 2 · CALCULATE THE SECTION SELECTED ON THE GRAPH</div>
+<p class="hint">The selected section's estimated rise and horizontal run appear below. If you switch sections beside the graph, these values change automatically. You must nominate a section before submitting its calculation.</p>
 <div class="measure-fig"><div><small>Estimated rise / fall</small><strong id="given-rise">—</strong></div><div><small>Horizontal run along the route</small><strong id="given-run">—</strong></div></div>
 <label for="answer-grade">Signed gradient (decimal, e.g. 0.12 or -0.12)</label>
 <div class="suffix"><input id="answer-grade" type="number" step="any" class="input" placeholder="e.g. 0.12"><span>decimal</span></div>
@@ -131,18 +182,20 @@ label{font-size:16px;line-height:1.35;margin:18px 0 7px}
 <div id="measure-feedback" class="feedback" aria-live="polite"></div><div id="calculation-progress" class="status"></div>
 </section>
 <section id="panel-decide" class="mission-panel hidden">
-<h2>Balance distance and <em>gentleness.</em></h2>
-<p class="muted">Compare routes with the same fixed points A and B. There is no compulsory gradient cutoff. Recommend a reasonable compromise between walking length and the steepest estimated sections.</p>
-<div class="callout"><b>REFERENCE MODEL — EXPLICIT ASSUMPTION</b><p>Compute a 0–1 score for each route: <strong>45% distance penalty + 55% steepness penalty</strong>. Both penalties are scaled from the smallest to largest values among your saved routes (0 = best, 1 = worst). The lowest score is the suggested compromise, not the only defensible opinion. Scores are NOT gradient percentages.</p></div>
-<div id="mission-lock" class="status">Save at least two routes and calculate three nominated sections (including one per route).</div>
+<h2>Is the maximum gradient <em>greater than 0.15?</em></h2>
+<p class="muted">For EACH walking route, answer <strong>True or False</strong>: <strong>“The maximum magnitude of the gradient, |g|, among all modelled sections of this route is strictly greater than 0.15.”</strong></p>
+<div class="callout"><b>USE YOUR MISSION 2 EVIDENCE</b><p>You calculated THREE or more sections. These are clues, but they may NOT include the steepest section of a whole route. Make a prediction now. The website will check <strong>every section</strong> and reveal the correct maximum after you submit all answers.</p></div>
+<div class="status"><strong>Meaning of maximum:</strong> |g| = |vertical change ÷ horizontal run|. Uphill and downhill both count toward steepness. Exactly 0.15 is <strong>False</strong> because the question says <strong>greater than</strong>.</div>
+<div id="mission-lock" class="status">Complete Mission 2 first.</div>
 <div id="comparison" class="comparison"></div>
-<label for="recommendation">Your preferred route (decide BEFORE checking the reference answer)</label><select id="recommendation" class="input"><option value="">Select one</option></select>
-<label for="reason-final">Justify your choice using walking lengths, the steepest sections and at least one limitation of terrain data</label>
-<textarea id="reason-final" class="input" rows="5" placeholder="I choose Route ... because the walking length is ..., while its steepest section has gradient ... . This terrain estimate is limited by ..."></textarea>
-<button id="submit-decision" class="button primary wide">Submit &amp; reveal reference suggestion →</button>
+<div id="mission-three-questions" class="mission-three-questions" aria-label="True or false for each route"></div>
+<div id="question-count" class="status" aria-live="polite">Answer every route before submitting.</div>
+<label for="reason-final">Optional: briefly explain your predictions using your Mission 2 calculations</label>
+<textarea id="reason-final" class="input" rows="3" placeholder="Route A may exceed 0.15 because... I cannot be certain until I inspect every section."></textarea>
+<button id="submit-decision" class="button primary wide" type="button">Submit ALL True / False answers → Reveal the real maxima</button>
 <div id="decision-feedback" class="feedback" aria-live="polite"></div>
 <div id="reference-answer" class="reference-answer hidden" aria-live="polite"></div>
-<details class="optional"><summary>Bonus: Hong Kong gradient signs (optional)</summary><p>A sign marked 1:5 represents a rise of 1 for every 5 horizontal units. This is a 0.20 gradient magnitude. Road signs are not precise surveys of an entire route.</p><input id="sign-slider" type="range" min="4" max="20" value="8"><b id="sign-output">1:8 = 0.125 gradient, 7.13°</b></details>
+<details class="optional"><summary>Bonus: Hong Kong gradient signs (optional)</summary><p>A sign marked 1:5 indicates 1 unit of rise for 5 horizontal units; its gradient magnitude is 0.20. A warning sign is not a precision survey of an entire route.</p><input id="sign-slider" type="range" min="4" max="20" value="8"><b id="sign-output">1:8 = 0.125 gradient, 7.13°</b></details>
 </section>
 <div class="phase-actions"><button id="prev" class="button subtle">← Previous</button><button id="next" class="button primary grow">Continue →</button></div></aside>
 </div>
@@ -163,6 +216,8 @@ let map=null,contextMap=null,contextTiles=null,googleReady=false,routeApi=null,e
 let endpoints=[null,null],endpointMarkers=[],routeLines=[],segmentHighlight=null,routeRecords=[],activeRoute=0,activeSection=0,loadingRoutes=false,loadToken=0;
 let sectionWidth=200,toastTimeout=null,journeyLocked=false;
 let selectingVia=false,viaPoint=null,viaMarker=null;const ROUTE_SESSION_KEY='central-slope-explorer-v5-routes';
+let trueFalseDraft={};
+const GRADIENT_THRESHOLD=0.15;
 const journal={prediction:null,nominated:{},solved:{},decision:null};
 try{const obj=JSON.parse(localStorage.getItem('central-slope-explorer-v5-journal'));if(obj&&typeof obj==='object')Object.assign(journal,{prediction:obj.prediction||null,nominated:obj.nominated||{},solved:obj.solved||{},decision:obj.decision||null});}catch(e){}
 function ratioText(g){return Math.abs(g)<0.00005?'level':`1:${fmt(1/Math.abs(g),2)} (${g<0?'downhill':'uphill'})`;}
@@ -171,8 +226,27 @@ function solvedCount(){return Object.values(journal.solved).reduce((n,items)=>n+
 function isNominated(r,s){return !!r&&!!s&&(journal.nominated[r.id]||[]).includes(s.index);}
 function isSolved(r,s){return !!r&&!!s&&(journal.solved[r.id]||[]).some(x=>x.section===s.index);}
 function eachRouteNominated(){return routeRecords.length>=2&&routeRecords.every(r=>(journal.nominated[r.id]||[]).length>0);}
+/* For Mission 3, steepest means the highest MAGNITUDE of signed gradient.
+   The entire modelled route is checked, even sections not nominated by students. */
+function steepestInfo(r){
+ const list=r?.segments||[];if(!list.length)return null;
+ const sec=list.reduce((best,x)=>Math.abs(x.gradient)>Math.abs(best.gradient)?x:best,list[0]);
+ const mag=Math.abs(sec.gradient);
+ return {sec,magnitude:mag,exceeds:mag>GRADIENT_THRESHOLD};
+}
+function hasSubmittedRouteAnswers(){
+ const a=journal.decision?.answers;
+ return !!a&&journal.decision.sectionWidth===sectionWidth&&routeRecords.length>=2&&routeRecords.every(r=>typeof a[r.id]==='boolean')&&Object.keys(a).length===routeRecords.length;
+}
+function answeredCount(){return routeRecords.filter(r=>typeof trueFalseDraft[r.id]==='boolean').length;}
+function updateQuizProgress(){
+ const ready=answeredCount()===routeRecords.length && routeRecords.length>=2;
+ $('submit-decision').disabled=!allSolved()||!ready||hasSubmittedRouteAnswers();
+ $('question-count').textContent=hasSubmittedRouteAnswers()?'✓ All answers submitted. The reference answers and actual steepest modelled sections appear below.':`${answeredCount()} / ${routeRecords.length} routes answered. Choose True or False for EVERY route before revealing the correct answers.`;
+}
+
 function allSolved(){return routeRecords.length>=2&&selectedCount()>=3&&eachRouteNominated()&&routeRecords.every(r=>r.segments?.length&&(journal.nominated[r.id]||[]).every(idx=>(journal.solved[r.id]||[]).some(x=>x.section===idx)))&&solvedCount()>=3;}
-function invalidateDecision(){journal.decision=null;$('reference-answer').classList.add('hidden');$('reference-answer').innerHTML='';$('decision-feedback').textContent='';}
+function invalidateDecision(){journal.decision=null;trueFalseDraft={};$('reference-answer').classList.add('hidden');$('reference-answer').innerHTML='';$('decision-feedback').textContent='';}
 function setJourneyHelp(){
  const n=routeRecords.length,hasA=!!endpoints[0],hasB=!!endpoints[1];
  const help=n>=2?`✓ ${n} different saved routes connect the SAME A and B. Predict, measure, then compare!`:n===1?'Route A is saved. To compare different paths, choose a VIA POINT on another street. A and B will remain fixed.':hasA&&hasB?'A and B selected. Click “Find first route”.':hasA?'A chosen. Now click the destination B on the map.':'Start with “Use sample locations” or click A, then B on the map.';
@@ -203,12 +277,29 @@ function updateNotebook(){
   if(nom.length)rows.push([`02 · Route ${r.id} candidates`,nom.map(i=>`S${i}`).join(', ')+' nominated']);
   for(const m of done)rows.push([`02 · Route ${r.id} S${m.section}`,`gradient ${signed(m.gradient,4)} · ${ratioText(m.gradient)} · ${signed(m.angle,2)}°`]);
  }
- if(journal.decision)rows.push(['03 · Route recommendation',`${journal.decision.choice}: ${journal.decision.reason}`]);
+ if(hasSubmittedRouteAnswers()){
+  const answers=routeRecords.map(r=>`Route ${r.id}: ${journal.decision.answers[r.id]?'True':'False'}`).join('; ');
+  rows.push(['03 · Maximum gradient > 0.15',answers+' (submitted)']);
+ }
  $('notebook').innerHTML=rows.length?rows.map(([a,b])=>`<div class="note"><b>${escapeHTML(a)}</b>${escapeHTML(b).slice(0,360)}</div>`).join(''):'<p class="muted">Your predictions and calculations appear here.</p>';
 }
-function updateProgress(){const n=Number(Boolean(journal.prediction))+Number(allSolved())+Number(Boolean(journal.decision));$('progress-num').textContent=`${n} / 3`;$('progress-bar').style.width=`${n/3*100}%`;for(const [key,yes] of Object.entries({explore:!!journal.prediction,measure:allSolved(),decide:!!journal.decision}))$('mark-'+key).textContent=yes?'✓':'↗';}
+function updateProgress(){const n=Number(Boolean(journal.prediction))+Number(allSolved())+Number(hasSubmittedRouteAnswers());$('progress-num').textContent=`${n} / 3`;$('progress-bar').style.width=`${n/3*100}%`;for(const [key,yes] of Object.entries({explore:!!journal.prediction,measure:allSolved(),decide:hasSubmittedRouteAnswers()}))$('mark-'+key).textContent=yes?'✓':'↗';}
 
-function switchPhase(p){phase=p;for(const k of ['explore','measure','decide']){$('panel-'+k).classList.toggle('hidden',k!==p);document.querySelector(`.mission[data-phase="${k}"]`).classList.toggle('active',k===p);}const names={explore:'MISSION 01 / DISCOVER',measure:'MISSION 02 / INVESTIGATE',decide:'MISSION 03 / DECIDE'};$('mission-heading').textContent=names[p];$('prev').disabled=p==='explore';$('next').textContent=p==='decide'?'Back to exploring ↗':'Continue →';if(p==='measure')renderMeasure();if(p==='decide')renderCompare();renderProfile();}
+function switchPhase(p){
+ phase=p;
+ for(const k of ['explore','measure','decide']){
+  $('panel-'+k).classList.toggle('hidden',k!==p);
+  document.querySelector(`.mission[data-phase="${k}"]`).classList.toggle('active',k===p);
+ }
+ const names={explore:'MISSION 01 / DISCOVER',measure:'MISSION 02 / INVESTIGATE',decide:'MISSION 03 / CHECK THE MAXIMUM'};
+ $('mission-heading').textContent=names[p];$('prev').disabled=p==='explore';
+ $('next').textContent=p==='decide'?'Back to exploring ↗':'Continue →';
+ $('graph-section-picker').classList.toggle('hidden',p!=='measure');
+ $('profile-explore-layout').classList.toggle('with-picker',p==='measure');
+ if(p==='measure')renderMeasure();
+ if(p==='decide')renderCompare();
+ renderProfile();
+}
 function mapTab(which){
  tab=which;const terrain=which==='contours';$('tab-routes').classList.toggle('active',!terrain);$('tab-contours').classList.toggle('active',terrain);
  if(!map)return;
@@ -327,10 +418,19 @@ function renderRoutes(){
 function renderProfile(){const r=routeRecords[activeRoute];$('profile-title').textContent=r?`Route ${r.id} · estimated terrain along mapped pedestrian path`:'Select a walking route';$('profile-pill').textContent=r?.samples?.length?'APPROXIMATE TERRAIN':r?'AWAITING ELEVATION':'NO ROUTE YET';const m=$('route-metrics');if(!r?.segments?.length){$('profile-area').innerHTML=`<div class="profile-empty">${r?.error?escapeHTML(r.error):'When the routing service returns a walking route, its terrain profile appears here.'}</div>`;m.innerHTML='<div><small>Walking-route length</small><b>—</b></div><div><small>Horizontal route run</small><b>—</b></div><div><small>Overall gradient</small><b>—</b></div><div><small>Max uphill section</small><b>—</b></div>';return;}
 const list=r.samples,hMin=Math.min(...list.map(p=>p.elevation)),hMax=Math.max(...list.map(p=>p.elevation)),delta=Math.max(3,hMax-hMin),W=660,H=186,L=45,R=16,T=17,B=29;
 const x=s=>L+s/r.horizontalRun*(W-L-R),y=h=>H-B-(h-hMin)/delta*(H-B-T),line=list.map(p=>`${x(p.x).toFixed(1)},${y(p.elevation).toFixed(1)}`).join(' '),s=r.segments[activeSection];
-const bands=r.segments.map((z,i)=>`<rect data-seg="${i}" x="${x(z.x0)}" y="${T}" width="${Math.max(1,x(z.x1)-x(z.x0))}" height="${H-T-B}" fill="${i===activeSection?r.color:'#ffffff'}" fill-opacity="${i===activeSection?.16:.025}" stroke="#ffffff" stroke-opacity=".09" style="cursor:pointer"/>`).join('');
+const revealed=hasSubmittedRouteAnswers(),peak=revealed?steepestInfo(r):null;
+const bands=r.segments.map((z,i)=>{
+ const picked=isNominated(r,z),peakBand=peak?.sec.index===z.index;
+ const color=peakBand?'#f0be75':picked?'#f0be75':i===activeSection?r.color:'#ffffff';
+ const opacity=peakBand?.30:picked?.17:i===activeSection?.17:.028;
+ return `<rect data-seg="${i}" x="${x(z.x0)}" y="${T}" width="${Math.max(1,x(z.x1)-x(z.x0))}" height="${H-T-B}" fill="${color}" fill-opacity="${opacity}" stroke="${peakBand?'#f0be75':'#ffffff'}" stroke-opacity="${peakBand?'.9':'.12'}" stroke-width="${peakBand?'1.5':'0.5'}" style="cursor:pointer" role="button" tabindex="0" aria-label="Route ${r.id} section ${z.index}${picked?', nominated':''}" aria-pressed="${i===activeSection}"><title>Section S${z.index}: click to inspect${picked?' (your nominated candidate)':''}</title></rect>`;
+}).join('');
 $('profile-area').innerHTML=`<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="Terrain elevation profile for Route ${r.id}"><path d="M${L} ${T} V${H-B} H${W-R}" fill="none" stroke="#bed6e3" stroke-opacity=".5"/>${bands}<polyline points="${line}" fill="none" stroke="${r.color}" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><circle cx="${x(s.x0)}" cy="${y(s.h0)}" r="4" fill="#fff"/><circle cx="${x(s.x1)}" cy="${y(s.h1)}" r="4" fill="#fff"/><text x="${L-5}" y="${T+5}" text-anchor="end" fill="#b8ced5" font-size="12">${fmt(hMax,0)}m</text><text x="${L-5}" y="${H-B}" text-anchor="end" fill="#b8ced5" font-size="12">${fmt(hMin,0)}m</text><text x="${L}" y="${H-7}" fill="#b8ced5" font-size="12">0m</text><text x="${W-R}" y="${H-7}" text-anchor="end" fill="#b8ced5" font-size="12">${fmt(r.horizontalRun,0)}m horizontal run</text></svg>`;
-$('profile-area').querySelectorAll('[data-seg]').forEach(b=>b.onclick=()=>selectSection(Number(b.dataset.seg)));
-const revealed=Boolean(journal.solved[r.id]),comparisonReady=phase==='decide'&&allSolved();m.innerHTML=`<div><small>Walking-route length</small><b>${fmt(r.googleDistance||r.horizontalRun,0)} m</b></div><div><small>Horizontal route run</small><b>${fmt(r.horizontalRun,0)} m</b></div><div><small>Net overall gradient</small><b>${revealed||comparisonReady?signed(r.overall,4):'🔒 Calculate first'}</b></div><div><small>Max |gradient| in ${sectionWidth}m sections</small><b>${comparisonReady?fmt(r.maxAbs,4):'🔒 Unlock in Mission 3'}</b></div>`;drawHighlightedSection();}
+$('profile-area').querySelectorAll('[data-seg]').forEach(b=>{
+ b.onclick=()=>selectSection(Number(b.dataset.seg));
+ b.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();selectSection(Number(b.dataset.seg));}};
+});
+const partlyRevealed=Boolean(journal.solved[r.id]?.length),comparisonReady=hasSubmittedRouteAnswers();m.innerHTML=`<div><small>Walking-route length</small><b>${fmt(r.googleDistance||r.horizontalRun,0)} m</b></div><div><small>Horizontal route run</small><b>${fmt(r.horizontalRun,0)} m</b></div><div><small>Net overall gradient</small><b>${partlyRevealed||comparisonReady?signed(r.overall,4):'🔒 Calculate first'}</b></div><div><small>Max |gradient| in ${sectionWidth}m sections</small><b>${comparisonReady?fmt(r.maxAbs,5):'🔒 Answer Mission 3 first'}</b></div>`;drawHighlightedSection();}
 function selectSection(i){const r=routeRecords[activeRoute];if(!r?.segments?.[i])return;activeSection=i;renderProfile();renderMeasure();}
 function toggleNomination(){
  const r=routeRecords[activeRoute],s=r?.segments?.[activeSection];if(!s)return;
@@ -347,9 +447,11 @@ function renderMeasure(){
  $('section-buttons').innerHTML=r?.segments?.map((sec,i)=>`<button class="section-btn ${i===activeSection?'active':''} ${isNominated(r,sec)?'nominated':''} ${isSolved(r,sec)?'done':''}" data-s="${i}" title="Select segment ${sec.index}">S${sec.index}${isNominated(r,sec)?' ★':''}${isSolved(r,sec)?' ✓':''}<br>${fmt(sec.run,0)}m</button>`).join('')||'<p class="muted">Generate a route and an elevation profile first.</p>';
  $('section-buttons').querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>selectSection(Number(b.dataset.s)));
  $('given-rise').textContent=s?signed(s.rise,2)+' m':'—';$('given-run').textContent=s?fmt(s.run,1)+' m':'—';
- $('nominate-section').disabled=!s;$('nominate-section').textContent=isNominated(r,s)?'★ Remove this nomination':'☆ Nominate this section as one of the steepest';
+ $('nominate-section').disabled=!s;
+ $('nominate-section').textContent=isNominated(r,s)?'★ Remove this nomination':'☆ Nominate selected section';
+ $('selected-graph-section').textContent=s?`Route ${r.id} · section S${s.index} · ${fmt(s.x0,0)}–${fmt(s.x1,0)} m from start along the route${isNominated(r,s)?' · ★ NOMINATED':''}`:'Choose a route and section beside the graph.';
  const list=routeRecords.flatMap(rec=>(journal.nominated[rec.id]||[]).map(i=>({rec,i,done:(journal.solved[rec.id]||[]).some(x=>x.section===i)})));
- $('nominations-list').innerHTML=`<b>${selectedCount()} nominated / at least 3 required; ${solvedCount()} calculated</b><p>${list.length?list.map(x=>`Route ${x.rec.id} S${x.i} ${x.done?'✓ calculated':'· calculation needed'}`).join(' · '):'Click a section, then “Nominate this section” to save your prediction.'}</p><p>${eachRouteNominated()?'✓ Every route represented':'Remember: select at least one section from EACH saved route.'}</p>`;
+ $('nominations-list').innerHTML=`<b>${selectedCount()} nominated / at least 3 required; ${solvedCount()} calculated</b><p>${list.length?list.map(x=>`Route ${x.rec.id} S${x.i} ${x.done?'✓ calculated':'· calculation needed'}`).join(' · '):'Choose a labelled section S1, S2, … beside the graph and click Nominate.'}</p><p>${eachRouteNominated()?'✓ Every route represented':'Remember: select at least one section from EACH saved route.'}</p>`;
  $('check-measure').disabled=!isNominated(r,s);
  $('calculation-progress').textContent=allSolved()?'✓ Mission 2 complete! At least three nominated sections calculated, with every route represented.':`To unlock Mission 3: nominate at least 3 sections across the saved routes, include each route, and correctly calculate EVERY nominated section.`;
 }
@@ -359,7 +461,7 @@ function checkMeasure(){
  const gs=$('answer-grade').value.trim(),ns=$('answer-n').value.trim(),as=$('answer-angle').value.trim(),g=Number(gs),a=Number(as);
  if(!gs||!ns||!as||!Number.isFinite(g)||!Number.isFinite(a)){feedback('measure-feedback','Enter the decimal gradient, 1:n denominator (or “level”), and signed angle.',false);return;}
  const expected=s.gradient,flat=Math.abs(expected)<.00005;
- const matchG=Math.abs(g-expected)<=.005,matchA=Math.abs(a-s.angle)<=.25;
+ const matchG=Math.abs(g-expected)<=.001,matchA=Math.abs(a-s.angle)<=.25;
  const n=Number(ns),expectedN=flat?null:1/Math.abs(expected),matchN=flat?/^(level|flat|∞|infinity)$/i.test(ns):ns!==''&&Number.isFinite(n)&&n>0&&Math.abs(n-expectedN)<=Math.max(.25,.03*expectedN);
  if(!matchG||!matchN||!matchA){feedback('measure-feedback',!matchG?'Check signed gradient = rise ÷ horizontal run (do NOT multiply by 100).':!matchN?'For 1:n, n = horizontal run ÷ |rise|; if rise is zero, write “level”.':'Check arctan(rise ÷ run) in degree mode.',false);return;}
  const arr=journal.solved[r.id]||[];const result={section:s.index,gradient:s.gradient,angle:s.angle,rise:s.rise,run:s.run,ratioN:expectedN};
@@ -369,45 +471,108 @@ function checkMeasure(){
  if(allSolved())notice('Mission 2 complete. Open Mission 3 to compare saved walking routes.');
 }
 
-function rankRoutes(){
- if(!routeRecords.length)return [];
- const rs=routeRecords.filter(r=>r.segments?.length),lengths=rs.map(r=>r.googleDistance||r.horizontalRun),steep=rs.map(r=>r.maxAbs),L0=Math.min(...lengths),L1=Math.max(...lengths),S0=Math.min(...steep),S1=Math.max(...steep);
- const ranked=rs.map(r=>{const length=r.googleDistance||r.horizontalRun;const dp=L1-L0>1e-8?(length-L0)/(L1-L0):0;const sp=S1-S0>1e-9?(r.maxAbs-S0)/(S1-S0):0;return {r,length,dp,sp,score:.45*dp+.55*sp};});
- ranked.sort((a,b)=>a.score-b.score||a.r.maxAbs-b.r.maxAbs||a.length-b.length||a.r.id.localeCompare(b.r.id));return ranked;
-}
-function bestRoute(){return rankRoutes()[0]?.r.id||null;}
+/* Mission 3: do not reveal maximum steepness until each route has an answer. */
 function renderCompare(){
- const enough=allSolved(),completed=solvedCount(),nominated=selectedCount();
- $('mission-lock').textContent=routeRecords.length<2?'Create at least TWO routes between the SAME A and B.':enough?`Ready: ${completed} calculations for ${nominated} nominated segments across ${routeRecords.length} routes. Compare them and choose a route.`:`Mission 2 incomplete: ${completed}/${nominated} nominated calculations saved (at least 3 and at least one from each route required).`;
- $('submit-decision').disabled=!enough;
- if(!enough){$('comparison').innerHTML='<p class="muted">The reference comparison unlocks after you complete the three-section investigation in Mission 2.</p>';return;}
- const items=rankRoutes();
- const topThree=routeRecords.flatMap(r=>r.segments.map(sec=>({route:r.id,section:sec.index,grade:Math.abs(sec.gradient),nominated:(journal.nominated[r.id]||[]).includes(sec.index)}))).sort((a,b)=>b.grade-a.grade).slice(0,3);
- const actualTop=`<div class="status"><b>Check your steep-section predictions:</b> In this approximate terrain model the three largest |gradients| are ${topThree.map(x=>`Route ${x.route} S${x.section} (${fmt(x.grade,4)}) ${x.nominated?'✓ nominated':'· not nominated'}`).join('; ')}. Section-length choice matters, so this is not an official road survey.</div>`;
- $('comparison').innerHTML=actualTop+`<table><thead><tr><th>Route</th><th>Walk length</th><th>Steepest |gradient|</th><th>Distance penalty</th><th>Slope penalty</th><th>Balance score</th></tr></thead><tbody>${items.map(x=>`<tr><td>Route ${x.r.id}</td><td>${fmt(x.length,0)} m</td><td>${fmt(x.r.maxAbs,4)}</td><td>${fmt(x.dp,2)}</td><td>${fmt(x.sp,2)}</td><td>${fmt(x.score,3)}</td></tr>`).join('')}</tbody></table><p class="hint">Lower balance score is preferable under the model: 0.45 × normalized distance penalty + 0.55 × normalized steepness penalty. “Steepest” here means the maximum absolute estimated section gradient; downhill sections count too. These are approximate terrain figures, not surveyed slopes.</p>`;
+ const enough=allSolved(),submitted=hasSubmittedRouteAnswers(),completed=solvedCount(),nominated=selectedCount();
+ $('mission-lock').textContent=routeRecords.length<2?'Create at least TWO distinct routes with the SAME A and B first.':enough?`Mission 2 complete: ${completed} verified calculations across ${routeRecords.length} routes. Make a True / False prediction for EACH route.`:`Mission 2 incomplete: ${completed} of ${nominated} nominated calculations saved (minimum three, including every route).`;
+ if(!enough){
+  $('comparison').innerHTML='<p class="muted">The True / False questions will unlock after your Mission 2 section calculations.</p>';
+  $('mission-three-questions').innerHTML='';
+  $('reference-answer').classList.add('hidden');
+  $('question-count').textContent='Finish Mission 2 to unlock these questions.';
+  $('submit-decision').disabled=true;
+  return;
+ }
+ const rows=routeRecords.map(r=>{
+  const done=journal.solved[r.id]||[],observed=done.length?Math.max(...done.map(s=>Math.abs(s.gradient))):null;
+  return `<tr><td>Route ${r.id}</td><td>${fmt(r.googleDistance||r.horizontalRun,0)} m</td><td>${done.length} of ${r.segments.length}</td><td>${observed===null?'—':fmt(observed,5)}</td></tr>`;
+ }).join('');
+ $('comparison').innerHTML=`<h3 style="font-size:18px;margin:15px 0 7px">Evidence from YOUR chosen sections only</h3><table><thead><tr><th>Route</th><th>Walking length</th><th>Sections calculated</th><th>Largest |g| you found</th></tr></thead><tbody>${rows}</tbody></table><p class="hint">These values are NOT necessarily each route's maximum. An unselected interval might be steeper.</p>`;
+ const answers=submitted?journal.decision.answers:trueFalseDraft;
+ $('mission-three-questions').innerHTML=routeRecords.map(r=>{
+  const chosen=answers[r.id],hasAnswer=typeof chosen==='boolean',checkedT=chosen===true?'checked':'',checkedF=chosen===false?'checked':'';
+  const disabled=submitted?'disabled':'';
+  return `<fieldset class="tf-card"><legend>Route ${r.id}</legend><p>Is the <strong>maximum magnitude |g|</strong> across ALL ${r.segments.length} modelled sections <strong>greater than 0.15</strong>?</p><div class="tf-choice-row"><label class="tf-choice"><input type="radio" name="tf-${r.id}" value="true" data-tf-route="${r.id}" ${checkedT} ${disabled}> True</label><label class="tf-choice"><input type="radio" name="tf-${r.id}" value="false" data-tf-route="${r.id}" ${checkedF} ${disabled}> False</label></div><p class="tf-evidence">Your ${r.id} calculations are clues, not proof that other intervals stay below 0.15.</p></fieldset>`;
+ }).join('');
+ if(!submitted){
+  $('mission-three-questions').querySelectorAll('input[data-tf-route]').forEach(b=>b.addEventListener('change',()=>{
+   if(b.checked){trueFalseDraft[b.dataset.tfRoute]=b.value==='true';updateQuizProgress();}
+  }));
+ }
+ updateQuizProgress();
+ if(submitted)renderReferenceAnswers();
+ else{$('reference-answer').classList.add('hidden');$('reference-answer').innerHTML='';}
+}
+function renderReferenceAnswers(){
+ if(!hasSubmittedRouteAnswers())return;
+ const answers=journal.decision.answers;
+ let correctCount=0;
+ const cards=routeRecords.map(r=>{
+  const peak=steepestInfo(r),actual=peak.exceeds,answer=answers[r.id],correct=answer===actual;
+  if(correct)correctCount++;
+  const nominated=(journal.nominated[r.id]||[]).includes(peak.sec.index);
+  return `<div class="tf-result"><b>Route ${r.id} — ${correct?'✓ Correct':'✗ Review your answer'}</b><p><strong>Your answer:</strong> ${answer?'True':'False'} · <strong>Reference answer:</strong> ${actual?'True':'False'}</p><p><strong>Steepest modelled section: S${peak.sec.index}</strong><br>Signed gradient = ${signed(peak.sec.gradient,5)}<br>Gradient magnitude |g| = <strong>${fmt(peak.magnitude,5)}</strong> ${actual?'&gt;':'≤'} 0.15<br>Steepness ratio = <strong>${ratioText(peak.sec.gradient)}</strong><br>Rise/fall = ${signed(peak.sec.rise,2)} m, horizontal run = ${fmt(peak.sec.run,2)} m</p><p class="explanation">${nominated?'You selected this steepest section in Mission 2.':'You did not nominate S'+peak.sec.index+'. This explains why checking only your three chosen sections may not identify the maximum.'}</p><button type="button" class="button secondary" data-peak-route="${r.id}">Highlight S${peak.sec.index} on the graph ↑</button></div>`;
+ }).join('');
+ $('reference-answer').classList.remove('hidden');
+ $('reference-answer').innerHTML=`<h3>Reference answers: ${correctCount}/${routeRecords.length} correct</h3><p>The website examined EVERY sampled section of each saved walking route. Sections you did not choose may contain the modelled maximum. The strict comparison uses the unrounded gradient, so exactly 0.15 is NOT greater than 0.15.</p>${cards}<p><strong>Accuracy warning:</strong> These are estimates from a coarse 90 m terrain model, not surveyed road or stair gradients. The section length and data resolution affect the apparent maximum.</p><button type="button" id="retry-route-quiz" class="button subtle wide">Try Mission 3 again (keep Mission 2 work)</button>`;
+ $('reference-answer').querySelectorAll('[data-peak-route]').forEach(b=>b.addEventListener('click',()=>{
+  const index=routeRecords.findIndex(r=>r.id===b.dataset.peakRoute);if(index<0)return;
+  const peak=steepestInfo(routeRecords[index]);
+  selectRoute(index);selectSection(routeRecords[index].segments.findIndex(s=>s.index===peak.sec.index));
+  $('profile-area').scrollIntoView({behavior:'smooth',block:'center'});
+ }));
+ $('retry-route-quiz').onclick=()=>{
+  invalidateDecision();journalSave();renderCompare();renderProfile();
+  $('mission-three-questions').scrollIntoView({behavior:'smooth',block:'start'});
+ };
 }
 function submitDecision(){
- if(!allSolved())return;
- const selected=$('recommendation').value,reason=$('reason-final').value.trim();
- if(!routeRecords.some(r=>r.id===selected)){feedback('decision-feedback','Please select one of your saved routes.',false);return;}
- if(reason.length<65){feedback('decision-feedback','Explain your chosen route with route lengths, gradient evidence and a limitation of terrain data (at least 65 characters).',false);return;}
- const ranking=rankRoutes(),best=ranking[0],own=ranking.find(x=>x.r.id===selected);
- journal.decision={choice:'Route '+selected,reference:'Route '+best.r.id,reason,sectionWidth,score:own.score,at:new Date().toISOString()};journalSave();
- const agrees=selected===best.r.id;
- feedback('decision-feedback',agrees?'✓ Your choice matches the reference scoring model. The teacher should still review your mathematical argument.':'Your choice differs from the reference model; it may still be defensible if you explain your priorities. Compare the scores below.',true);
- $('reference-answer').classList.remove('hidden');
- $('reference-answer').innerHTML=`<h3>Reference suggestion: Route ${best.r.id}</h3><p>The estimated walking distance is <b>${fmt(best.length,0)} m</b>; its steepest measured section has |gradient| <b>${fmt(best.r.maxAbs,4)}</b> (${ratioText(best.r.maxAbs)}). Its balanced score is <b>${fmt(best.score,3)}</b>, the lowest under our stated 45% / 55% weighting.</p><p>Your Route ${selected} scored <b>${fmt(own.score,3)}</b>. ${agrees?'It matches the reference suggestion.':'You may justify a different choice if you value distance and slope gentleness differently.'}</p><p><b>Important:</b> the chosen weights are a classroom modelling assumption. The coarse terrain dataset cannot guarantee true pavement gradients or pedestrian accessibility.</p>`;
+ if(!allSolved()){feedback('decision-feedback','Finish Mission 2 first: calculate at least three nominated sections including each route.',false);return;}
+ if(!routeRecords.every(r=>typeof trueFalseDraft[r.id]==='boolean')){
+  feedback('decision-feedback','Answer True or False for EVERY saved route before submitting.',false);return;
+ }
+ const answers=Object.fromEntries(routeRecords.map(r=>[r.id,trueFalseDraft[r.id]]));
+ const reason=$('reason-final').value.trim();
+ journal.decision={answers,reason,sectionWidth,at:new Date().toISOString()};
+ journalSave();
+ let right=0;for(const r of routeRecords)if(answers[r.id]===steepestInfo(r).exceeds)right++;
+ feedback('decision-feedback',`Answers submitted. ${right} of ${routeRecords.length} correct. See the reference maxima for all modelled sections below.`,true);
+ renderCompare();renderProfile();
+ $('reference-answer').scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 
 function savePrediction(){if(routeRecords.length<2){feedback('prediction-feedback','First save at least TWO different walking routes between the SAME A and B.',false);return;}const r=$('prediction').value,reason=$('predict-reason').value.trim();if(!routeRecords.find(z=>z.id===r)){feedback('prediction-feedback','Choose a displayed Walking route.',false);return;}if(reason.length<20){feedback('prediction-feedback','Explain your prediction using the geographical context (at least 20 characters).',false);return;}journal.prediction={route:r,reason,at:new Date().toISOString()};journalSave();feedback('prediction-feedback','✓ Prediction saved. Now investigate actual elevation profiles in Mission 2.',true);}
 function exportReport(){
- const lines=['CENTRAL SLOPE EXPLORER — STUDENT INVESTIGATION REPORT','Generated: '+new Date().toLocaleString(),'Routes: OpenStreetMap pedestrian network; elevations: approximately 90 m Open-Meteo terrain estimates.','WARNING: Terrain approximations are NOT surveyed road-surface gradients.','',`START: ${$('start-place').value}`,`DESTINATION: ${$('end-place').value}`,'','MISSION 1 — PREDICTION',journal.prediction?`Predicted Route ${journal.prediction.route}: ${journal.prediction.reason}`:'No saved prediction.','','MISSION 2 — THREE OR MORE NOMINATED SECTIONS'];
- for(const r of routeRecords){lines.push(`Route ${r.id}: walking ${fmt(r.googleDistance||r.horizontalRun,1)}m; overall signed gradient ${signed(r.overall,4)}; max |section gradient| ${fmt(r.maxAbs,4)}.`);for(const i of journal.nominated[r.id]||[]){const s=r.segments?.find(x=>x.index===i);const done=(journal.solved[r.id]||[]).some(x=>x.section===i);if(s)lines.push(`  Section ${i} ${done?'CALCULATED':'NOMINATED ONLY'}: rise ${signed(s.rise,2)}m; run ${fmt(s.run,1)}m; gradient ${signed(s.gradient,4)}; ${ratioText(s.gradient)}; angle ${signed(s.angle,2)} degrees.`);}}
- lines.push('','MISSION 3 — ROUTE COMPARISON', 'Reference model: 45% normalized walking length penalty + 55% normalized maximum |gradient| penalty. Lower is better.');
- if(allSolved())for(const x of rankRoutes())lines.push(`Route ${x.r.id}: length ${fmt(x.length,1)}m; max |gradient| ${fmt(x.r.maxAbs,4)}; score ${fmt(x.score,4)}.`);
- lines.push(journal.decision?`Student recommendation: ${journal.decision.choice}. Reference: ${journal.decision.reference}.
-Justification: ${journal.decision.reason}`:'Not submitted.', '', 'All routes share the same A and B. Score weights are only classroom assumptions; route grades come from coarse terrain data.');
- const blob=new Blob([lines.join('\n')],{type:'text/plain;charset=utf-8'}),url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download='central-slope-explorer-report.txt';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);notice('Report downloaded.');
+ const lines=[
+ 'CENTRAL SLOPE EXPLORER — STUDENT INVESTIGATION REPORT',
+ 'Generated: '+new Date().toLocaleString(),
+ 'Routing: OpenStreetMap walking paths; estimated elevations: 90 m Open-Meteo terrain model.',
+ 'CAUTION: These are NOT surveyed road-surface gradients.',
+ '',`START A: ${$('start-place').value}`,`DESTINATION B: ${$('end-place').value}`,
+ '', 'MISSION 1 — PREDICTION',
+ journal.prediction?`Predicted Route ${journal.prediction.route}: ${journal.prediction.reason}`:'No saved prediction.',
+ '', 'MISSION 2 — YOUR NOMINATED SECTIONS'
+ ];
+ for(const r of routeRecords){
+  lines.push(`Route ${r.id}: walking length ${fmt(r.googleDistance||r.horizontalRun,1)}m; ${r.segments.length} modelled sections.`);
+  for(const i of journal.nominated[r.id]||[]){
+   const s=r.segments?.find(x=>x.index===i),calculated=(journal.solved[r.id]||[]).some(x=>x.section===i);
+   if(s)lines.push(`  S${i}: ${calculated?'student calculated':'nominated; NOT calculated'}; rise ${signed(s.rise,2)} m; horizontal run ${fmt(s.run,1)} m; signed gradient ${signed(s.gradient,5)}; ${ratioText(s.gradient)}; angle ${signed(s.angle,2)} degrees.`);
+  }
+ }
+ lines.push('','MISSION 3 — IS MAXIMUM GRADIENT MAGNITUDE GREATER THAN 0.15?');
+ if(hasSubmittedRouteAnswers()){
+  for(const r of routeRecords){
+   const p=steepestInfo(r),student=journal.decision.answers[r.id];
+   lines.push(`Route ${r.id}: Student: ${student?'TRUE':'FALSE'}. Reference: ${p.exceeds?'TRUE':'FALSE'}. Correct: ${student===p.exceeds?'YES':'NO'}. Modelled steepest section: S${p.sec.index}. Signed g = ${signed(p.sec.gradient,6)}. |g| = ${fmt(p.magnitude,6)}. ${ratioText(p.sec.gradient)}.`);
+  }
+  lines.push(`Optional student justification: ${journal.decision.reason||'(not provided)'}`);
+ }else{
+  lines.push('Not submitted: reference maxima stay hidden until every route has a True / False answer.');
+ }
+ lines.push('','Note: three sampled sections do not prove the true maximum over an entire road. Gradient estimates may be inaccurate due to coarse terrain data.');
+ const blob=new Blob([lines.join('\n')],{type:'text/plain;charset=utf-8'}),url=URL.createObjectURL(blob),link=document.createElement('a');
+ link.href=url;link.download='central-slope-explorer-report.txt';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);notice('Report downloaded.');
 }
 
 function addListeners(){document.querySelectorAll('.mission').forEach(b=>b.addEventListener('click',()=>switchPhase(b.dataset.phase)));
@@ -424,10 +589,16 @@ function addListeners(){document.querySelectorAll('.mission').forEach(b=>b.addEv
  $('add-via-route').onclick=addViaRoute;
  $('section-width').onchange=e=>{sectionWidth=Number(e.target.value);for(const r of routeRecords)resampleSegments(r);journal.nominated={};journal.solved={};invalidateDecision();journalSave();activeSection=0;renderProfile();renderMeasure();renderCompare();saveRouteSession();notice('Section length changed: previous calculations reset.');};
  $('nominate-section').onclick=toggleNomination;
+ $('go-to-profile').onclick=()=>{
+  switchPhase('measure');
+  $('graph-section-picker').scrollIntoView({behavior:'smooth',block:'center'});
+  $('graph-section-picker').classList.add('profile-flash');
+  setTimeout(()=>$('graph-section-picker').classList.remove('profile-flash'),1600);
+ };
  $('show-hint').onclick=()=>$('hint-box').classList.toggle('hidden');$('check-measure').onclick=checkMeasure;
  $('submit-decision').onclick=submitDecision;$('sign-slider').oninput=e=>{const n=Number(e.target.value);$('sign-output').textContent=`1:${n} = ${fmt(1/n,4)} gradient, ${fmt(Math.atan(1/n)*180/Math.PI,2)}°`;};$('export').onclick=exportReport;
 }
-function start(){addListeners();updateNotebook();updateProgress();switchPhase('explore');initContextMap();mapTab('routes');restoreRouteSession();setJourneyHelp();if(journal.prediction)$('predict-reason').value=journal.prediction.reason;if(journal.decision)$('reason-final').value=journal.decision.reason;}
+function start(){addListeners();updateNotebook();updateProgress();switchPhase('explore');initContextMap();mapTab('routes');restoreRouteSession();setJourneyHelp();if(journal.prediction)$('predict-reason').value=journal.prediction.reason;if(hasSubmittedRouteAnswers()){$('reason-final').value=journal.decision.reason||'';trueFalseDraft={...journal.decision.answers};}updateProgress();}
 
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
 })();
