@@ -404,15 +404,13 @@ function deleteRoute(index){
  feedback('route-status',`Deleted route. ${routeRecords.length} route(s) remain, with the SAME fixed A and B. ${routeRecords.length===0?'You can find a first route again with these points.':'Add another via point if needed.'}`,true);
 }
 function renderRoutes(){
- const el=$('route-options'),previousPrediction=$('prediction').value,previousRecommendation=$('recommendation').value;
- if(!routeRecords.length){el.innerHTML='<p class="muted">No saved routes. Choose the same A/B and find a new route, or start a new journey.</p>';$('prediction').innerHTML='<option value="">Select a route after searching</option>';$('recommendation').innerHTML='<option value="">Select a route</option>';return;}
+ const el=$('route-options'),previousPrediction=$('prediction').value;
+ if(!routeRecords.length){el.innerHTML='<p class="muted">No saved routes. Choose the same A/B and find a new route, or start a new journey.</p>';$('prediction').innerHTML='<option value="">Select a route after searching</option>';return;}
  el.innerHTML=routeRecords.map((r,i)=>`<div class="route-group"><button type="button" class="route-option ${activeRoute===i?'selected':''}" data-routeidx="${i}"><span><b><i class="swatch" style="background:${r.color}"></i>Route ${r.id}</b><small>${r.segments.length?`${r.segments.length} terrain sections ready`:r.error?'Elevation unavailable':'Sampling terrain…'}</small></span><span>${r.googleDistance?`${fmt(r.googleDistance,0)} m`:'—'}<small>${r.via?'Via chosen street':'Walking alternative'} · same A/B</small></span></button><button type="button" class="delete-route" data-delete="${i}" title="Delete Route ${r.id}, keep A and B">✕ Delete</button></div>`).join('');
  el.querySelectorAll('[data-routeidx]').forEach(b=>b.onclick=()=>selectRoute(Number(b.dataset.routeidx)));
  el.querySelectorAll('[data-delete]').forEach(b=>b.onclick=()=>deleteRoute(Number(b.dataset.delete)));
  $('prediction').innerHTML='<option value="">Choose one</option>'+routeRecords.map(r=>`<option value="${r.id}">Route ${r.id}</option>`).join('');
- $('recommendation').innerHTML='<option value="">Choose one</option>'+routeRecords.map(r=>`<option value="${r.id}">Route ${r.id}</option>`).join('');
  $('prediction').value=routeRecords.some(r=>r.id===previousPrediction)?previousPrediction:'';
- $('recommendation').value=routeRecords.some(r=>r.id===previousRecommendation)?previousRecommendation:'';
 }
 
 function renderProfile(){const r=routeRecords[activeRoute];$('profile-title').textContent=r?`Route ${r.id} · estimated terrain along mapped pedestrian path`:'Select a walking route';$('profile-pill').textContent=r?.samples?.length?'APPROXIMATE TERRAIN':r?'AWAITING ELEVATION':'NO ROUTE YET';const m=$('route-metrics');if(!r?.segments?.length){$('profile-area').innerHTML=`<div class="profile-empty">${r?.error?escapeHTML(r.error):'When the routing service returns a walking route, its terrain profile appears here.'}</div>`;m.innerHTML='<div><small>Walking-route length</small><b>—</b></div><div><small>Horizontal route run</small><b>—</b></div><div><small>Overall gradient</small><b>—</b></div><div><small>Max uphill section</small><b>—</b></div>';return;}
